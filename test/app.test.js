@@ -81,8 +81,9 @@ test('Verify Emails were created in Emails Collection for patients who have CONS
     const patientsWithConsent = await getPatientsWithConsent(mongo);
     const patientsEmails = patientsWithConsent.map(patient => (patient['Email Address']));
 
-    // when        
-    const emails = await queryPatients(mongo, { 'Email Address': { $in: patientsEmails } });
+    // when   
+    await scheduleEmails({ mongo, patientsWithConsent });     
+    const emails = await queryEmails(mongo, { 'Email Address': { $in: patientsEmails } });
 
     // then
     expect(patientsEmails.length).toBe(emails.length);
