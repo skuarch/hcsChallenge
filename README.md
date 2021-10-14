@@ -35,7 +35,7 @@ When running test another database is created if you want to avoid this, edit en
 npm test
 ```
 
-Please make sure to update tests as appropriate.
+Please make sure to update environments as appropriate.
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
