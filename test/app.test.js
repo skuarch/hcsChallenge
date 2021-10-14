@@ -81,8 +81,9 @@ test('Verify Emails were created in Emails Collection for patients who have CONS
     const patientsWithConsent = await getPatientsWithConsent(mongo);
     const patientsEmails = patientsWithConsent.map(patient => (patient['Email Address']));
 
-    // when        
-    const emails = await queryPatients(mongo, { 'Email Address': { $in: patientsEmails } });
+    // when   
+    await scheduleEmails({ mongo, patientsWithConsent });
+    const emails = await queryEmails(mongo, { 'Email Address': { $in: patientsEmails } });
 
     // then
     expect(patientsEmails.length).toBe(emails.length);
@@ -104,7 +105,7 @@ test('Verify emails for each patient are scheduled correctly', async () => {
 
     // when        
     await scheduleEmails({ mongo, patientsWithConsent });
-    const emails = await queryEmails(mongo, {});        
+    const emails = await queryEmails(mongo, {});
 
     // then  
     let days = 'day';
@@ -112,8 +113,8 @@ test('Verify emails for each patient are scheduled correctly', async () => {
         if (i > 1) {
             days = 'days';
         }
-        const schedule = `NOW+${i} ${days}`;        
-        const email = emails.filter(email => (email.scheduled_date === schedule));                
+        const schedule = `NOW+${i} ${days}`;
+        const email = emails.filter(email => (email.scheduled_date === schedule));
         expect(email[0]).toBeDefined();
     }
     expect(patientsEmails.length).toBe(emails.length);
