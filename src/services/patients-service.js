@@ -8,11 +8,11 @@ export const createPatientsFromCsv = async ({ mongo, csvPatients }) => {
 
 export const queryPatients = async (mongo, query) => {
   const patientsCollection = mongo.database.collection(PATIENTS_COLLECTION);
-  const patients = await patientsCollection.find(query).toArray();  
+  const patients = await patientsCollection.find(query).toArray();
   return patients;
 }
 
-export const getPatientsWithConsent = async mongo => {  
-  const patients = await queryPatients(mongo, { CONSENT: 'Y' });  
+export const getPatientsWithConsent = async mongo => {
+  const patients = await queryPatients(mongo, { CONSENT: 'Y' });
   return patients;
 }
