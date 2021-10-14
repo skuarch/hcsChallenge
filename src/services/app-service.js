@@ -12,15 +12,15 @@ export const validateArguments = () => {
 export const shutdownHook = mongo => {
     process.on('SIGTERM', () => {
         mongo.connection.close();
-        console.log('\nSIGTERM signal received: closing mongo connections\n');        
+        console.log('\nSIGTERM signal received: closing mongo connections\n');
     });
-    
+
     process.on('SIGINT', () => {
         mongo.connection.close();
         console.log('\nSIGINT signal received: closing mongo connections\n')
-        
-    });    
-    
+
+    });
+
     process.on('exit', () => {
         console.log('App is done!');
     });
